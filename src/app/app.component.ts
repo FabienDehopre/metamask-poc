@@ -12,11 +12,14 @@ import { enterZone } from "./enter-zone";
   standalone: true,
   imports: [AsyncPipe, JsonPipe, NgIf],
   template: `
-    <ng-container *ngIf="provider != undefined">
+    <ng-container *ngIf="provider != undefined; else noProvider">
       <button (click)="connectToWallet()">Connect</button>
       <hr />
       <pre>Accounts: {{ accounts$ | async | json }}</pre>
     </ng-container>
+    <ng-template #noProvider>
+      <p>No ethereum provider found.</p>
+    </ng-template>
   `,
 })
 export class AppComponent implements OnInit {
