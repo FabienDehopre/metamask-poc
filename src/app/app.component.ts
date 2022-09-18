@@ -1,5 +1,5 @@
 import { AsyncPipe, JsonPipe, NgIf } from "@angular/common";
-import { Component, NgZone, OnInit } from "@angular/core";
+import {Component, inject, NgZone, OnInit} from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import {
   detectEthereumProvider,
@@ -26,8 +26,7 @@ export class AppComponent implements OnInit {
   provider?: MetaMaskEthereumProvider | null;
   accounts$?: Observable<string[]>;
   accountsSub = new ReplaySubject<string[]>(1);
-
-  constructor(private readonly zone: NgZone) {}
+  private readonly zone = inject(NgZone);
 
   async ngOnInit(): Promise<void> {
     this.accounts$ = this.accountsSub.asObservable().pipe(enterZone(this.zone));
