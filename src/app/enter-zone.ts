@@ -17,10 +17,14 @@ export function enterZone<T>(zone: NgZone): MonoTypeOperatorFunction<T> {
           });
         },
         error: (err) => {
-          observer.error(err);
+          zone.run(() => {
+            observer.error(err);
+          });
         },
         complete: () => {
-          observer.complete();
+          zone.run(() => {
+            observer.complete();
+          })
         },
       });
     });
