@@ -1,5 +1,5 @@
-import { NgZone } from '@angular/core';
-import { MonoTypeOperatorFunction, Observable } from 'rxjs';
+import { NgZone } from "@angular/core";
+import { MonoTypeOperatorFunction, Observable } from "rxjs";
 
 /**
  * Lets an observable running outside Angular zone to enter into Angular zone so that the change detection works properly.
@@ -8,21 +8,21 @@ import { MonoTypeOperatorFunction, Observable } from 'rxjs';
  * @return A new observable running inside the Angular zone.
  */
 export function enterZone<T>(zone: NgZone): MonoTypeOperatorFunction<T> {
-return (source: Observable<T>) => {
+  return (source: Observable<T>) => {
     return new Observable<T>((observer) => {
-    return source.subscribe({
+      return source.subscribe({
         next: (value) => {
-        zone.run(() => {
+          zone.run(() => {
             observer.next(value);
-        });
+          });
         },
         error: (err) => {
-        observer.error(err);
+          observer.error(err);
         },
         complete: () => {
-        observer.complete();
+          observer.complete();
         },
+      });
     });
-    });
-};
+  };
 }
