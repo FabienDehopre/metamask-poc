@@ -43,7 +43,6 @@ export class AppComponent implements OnInit {
       const result = (await this.provider.request({
         method: "eth_requestAccounts",
       })) as string[];
-      console.log("ETH accounts", result);
       this.accountsSub.next(result);
     }
   }
