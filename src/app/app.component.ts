@@ -26,10 +26,10 @@ export class AppComponent implements OnInit {
   provider?: MetaMaskEthereumProvider | null;
   accounts$?: Observable<string[]>;
   accountsSub = new ReplaySubject<string[]>(1);
-  private readonly zone = inject(NgZone);
+  private readonly ngZone = inject(NgZone);
 
   async ngOnInit(): Promise<void> {
-    this.accounts$ = this.accountsSub.asObservable().pipe(enterZone(this.zone));
+    this.accounts$ = this.accountsSub.asObservable().pipe(enterZone(this.ngZone));
     this.provider = await detectEthereumProvider();
     if (this.provider) {
       this.provider.on("accountsChanged", (accounts) => {
